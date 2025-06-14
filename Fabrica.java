@@ -13,7 +13,7 @@ public class Fabrica {
     private int estadosGeneradosBack;
 
     public Fabrica() {
-
+        this.mejorSolucionBack = new ArrayList<>();
         this.maquinas = new ArrayList<>();
     }
 
@@ -37,40 +37,38 @@ public class Fabrica {
 
     public List<Maquina> solucionBacktracking() {
 
-        List<Maquina> candidatos = new ArrayList<>(maquinas);
-        candidatos.sort((m1, m2) -> Integer.compare(m2.getPiezas(), m1.getPiezas()));
+
         List<Maquina> camino = new ArrayList<>();
-        backtracking(camino, 0, candidatos);
+        
+        backtracking(camino, 0 );
 
         return mejorSolucionBack;
     }
 
-   private void backtracking(List<Maquina> camino, int suma, List<Maquina> candidatos) {
-    estadosGeneradosBack++;
+    private void backtracking(List<Maquina> camino, int suma) {
+        estadosGeneradosBack++;
 
-    if (suma == piezasTotales) {
-        if (mejorSolucionBack == null || camino.size() < mejorSolucionBack.size()) {
-            
-        }
-    } else{ 
-        
-        if(suma < piezasTotales &&
-              (mejorSolucionBack == null || camino.size() < mejorSolucionBack.size())) {
-
-        for (int i = 0; i < candidatos.size(); i++) {
-            Maquina m = candidatos.get(i);
-
-            if (suma + m.getPiezas() <= piezasTotales) {
-                camino.add(m);
-                suma += m.getPiezas();
-                backtracking(camino, suma, candidatos);
-                camino.remove(camino.size() - 1);
-                suma -= m.getPiezas(); // backtrack
+        if (suma == piezasTotales) {
+            if (mejorSolucionBack.isEmpty() || camino.size() < mejorSolucionBack.size()) {
+                mejorSolucionBack.clear();
+                mejorSolucionBack.addAll(camino);
             }
+        } else {
+
+            if (suma < piezasTotales || camino.size() < mejorSolucionBack.size()) {
+
+                for (Maquina m : maquinas) {
+                    if (suma + m.getPiezas() <= piezasTotales) {
+                        camino.add(m);
+                        backtracking(camino, suma + m.getPiezas());
+                        camino.remove(camino.size() - 1);
+                    }
+                }
+
+            }
+
         }
     }
-    }
-}
 
     public List<Maquina> solucionGreedy() {
         List<Maquina> solucion = new ArrayList<>();
