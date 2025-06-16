@@ -37,14 +37,32 @@ public class Fabrica {
 
     public List<Maquina> solucionBacktracking() {
 
-
         List<Maquina> camino = new ArrayList<>();
-        
-        backtracking(camino, 0 );
+
+        backtracking(camino, 0);
 
         return mejorSolucionBack;
     }
 
+    /*
+     * Estrategia de resolución - Backtracking:
+     * - Se genera un árbol de exploración en el que cada nivel representa una nueva
+     * puesta en funcionamiento de una máquina.
+     * 
+     * - Cada nodo del arbol representa una secuencia parcial de máquinas y la
+     * cantidad
+     * acumulada de piezas producidas hasta ese punto.
+     * - Un estado es valido es si la suma de piezas alcanza exactamente el total
+     * requerido (piezasTotales).
+     * 
+     * - Se aplica poda si:
+     * - La suma actual supera las piezasTotales.
+     * - El camino actual ya tiene más máquinas que la mejor solución encontrada.
+     * - Los candidatos se ordenan de mayor a menor cantidad de piezas para explorar
+     * primero las combinaciones más prometedoras y así favorecer una poda temprana.
+     * - Se lleva un contador de estados generados para medir el costo computacional
+     * de la búsqueda.
+     */
     private void backtracking(List<Maquina> camino, int suma) {
         estadosGeneradosBack++;
 
@@ -70,10 +88,30 @@ public class Fabrica {
         }
     }
 
+    /*
+     * Estrategia de resolución - Greedy:
+     * - Se consideran todas las máquinas como opciones posibles (candidatos), y se
+     * pueden usar más de una vez.
+     * - En cada paso, se elige la máquina que produce más piezas y que todavía no
+     * hace que se pase del total necesario, con el fin de que tenga que recurrir a
+     * usar otras maquinas y asi optimizar la busqueda.
+     * - La idea es acercarse lo más rápido posible al total de piezas, eligiendo
+     * siempre la mejor opción en ese momento.
+     * - Esta estrategia no siempre garantiza que se llegue a una solución. Si con
+     * las máquinas que elegimos no se puede alcanzar
+     * la cantidad de piezas que necesitamos, entonces no se cumple el objetivo.
+     * 
+     * - Se cuenta cuántos candidatos se consideraron para medir cuánto costó
+     * encontrar la solución.
+     */
+
     public List<Maquina> solucionGreedy() {
         List<Maquina> solucion = new ArrayList<>();
-        List<Maquina> disponibles = new ArrayList<>(this.maquinas);
-        disponibles.sort((m1, m2) -> Integer.compare(m2.getPiezas(), m1.getPiezas()));
+        List<Maquina> disponibles = new ArrayList<>(this.maquinas);// copiamos el arreglo original de maquinas para no
+                                                                   // midificarlo
+        disponibles.sort((m1, m2) -> Integer.compare(m2.getPiezas(), m1.getPiezas()));// ordenamos las maquinas de mayor
+                                                                                      // a menor capacidad de produccion
+                                                                                      // de piezas
         int suma = 0;
 
         while (!disponibles.isEmpty() && suma < this.piezasTotales) {
