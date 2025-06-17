@@ -14,7 +14,7 @@ public class Main {
         if (!back.isEmpty()) {
             System.out.println("Solución obtenida: " );
             for (Maquina m : back) {
-                System.out.print(m.getNombre() + " ");
+                System.out.print(m.getNombre() + "(" + m.getPiezas() + ")" + " ");
             }
             System.out.println();
 
@@ -36,7 +36,7 @@ public class Main {
              // Mostrar secuencia de máquinas
              System.out.print("Solución obtenida: ");
              for (Maquina m : greedy) {
-                 System.out.print(m.getNombre() + " ");
+                 System.out.print(m.getNombre() + "(" + m.getPiezas() + ")" + " ");
              }
              System.out.println();
 
