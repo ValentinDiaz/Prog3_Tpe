@@ -47,13 +47,16 @@ public class Fabrica {
     /*
      * Estrategia de resolución - Backtracking:
      * - Se genera un árbol de exploración en el que cada nivel representa una nueva
-     * puesta en funcionamiento de una máquina.
+     * puesta en funcionamiento de una máquina:
      * 
-     * - Cada nodo del arbol representa una secuencia parcial de máquinas y la
-     * cantidad
-     * acumulada de piezas producidas hasta ese punto.
-     * - Un estado es valido es si la suma de piezas alcanza exactamente el total
-     * requerido (piezasTotales).
+     * * - El árbol de exploración se genera probando, en cada nivel, una máquina que se agrega a la secuencia (camino).
+     *   Es decir, en cada rama del árbol se simula poner en funcionamiento una máquina más.
+     *
+     * - Un estado es válido si la suma de piezas del camino actual no supera el total de piezas requeridas (piezasTotales).
+     * - Un estado es solución si la suma de piezas del camino actual es exactamente igual a piezasTotales.
+     *   En ese caso, se compara la cantidad de máquinas usadas con la mejor solución encontrada hasta el momento.
+     *
+     * - Un estado no es válido si la suma de piezas ya supera el total requerido.
      * 
      * - Se aplica poda si:
      * - La suma actual supera las piezasTotales.
