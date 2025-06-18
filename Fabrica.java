@@ -59,10 +59,9 @@ public class Fabrica {
      * - Un estado no es válido si la suma de piezas ya supera el total requerido.
      * 
      * - Se aplica poda si:
+     *
      * - La suma actual supera las piezasTotales.
      * - El camino actual ya tiene más máquinas que la mejor solución encontrada.
-     * - Los candidatos se ordenan de mayor a menor cantidad de piezas para explorar
-     * primero las combinaciones más prometedoras y así favorecer una poda temprana.
      * - Se lleva un contador de estados generados para medir el costo computacional
      * de la búsqueda.
      */
@@ -76,13 +75,14 @@ public class Fabrica {
             }
         } else {
 
-            if (suma < piezasTotales || camino.size() < mejorSolucionBack.size()) {
+            if (suma < piezasTotales &&
+                    (mejorSolucionBack.isEmpty() || camino.size() < mejorSolucionBack.size())) {
 
                 for (Maquina m : maquinas) {
                     if (suma + m.getPiezas() <= piezasTotales) {
                         camino.add(m);
                         backtracking(camino, suma + m.getPiezas());
-                        camino.remove(camino.size() - 1);
+                        camino.removeLast();
                     }
                 }
 
