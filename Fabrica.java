@@ -95,25 +95,25 @@ public class Fabrica {
      * Estrategia de resolución - Greedy:
      * - Se consideran todas las máquinas como opciones posibles (candidatos), y se
      * pueden usar más de una vez.
-     * - En cada paso, se elige la máquina que produce más piezas y que todavía no
-     * hace que se pase del total necesario, con el fin de que tenga que recurrir a
-     * usar otras maquinas y asi optimizar la busqueda.
+     * Se ordenan las máquinas de mayor de las que mas producen piezas a las que menos producen
+     * - En cada paso, se elige la máquina que produce más piezas y que todavía
+     * no se pase del total necesario, con el fin de que tenga que recurrir a
+     * usar otras máquinas y asi optimizar la búsqueda.
      * - La idea es acercarse lo más rápido posible al total de piezas, eligiendo
      * siempre la mejor opción en ese momento.
      * - Esta estrategia no siempre garantiza que se llegue a una solución. Si con
-     * las máquinas que elegimos no se puede alcanzar
-     * la cantidad de piezas que necesitamos, entonces no se cumple el objetivo.
-     * 
+     * las máquinas que elegimos no se puede alcanzar la cantidad de piezas que necesitamos,
+     * entonces no se cumple el objetivo.
      * - Se cuenta cuántos candidatos se consideraron para medir cuánto costó
      * encontrar la solución.
      */
 
     public List<Maquina> solucionGreedy() {
         List<Maquina> solucion = new ArrayList<>();
-        List<Maquina> disponibles = new ArrayList<>(this.maquinas);// copiamos el arreglo original de maquinas para no
-                                                                   // midificarlo
-        disponibles.sort((m1, m2) -> Integer.compare(m2.getPiezas(), m1.getPiezas()));// ordenamos las maquinas de mayor
-                                                                                      // a menor capacidad de produccion
+        List<Maquina> disponibles = new ArrayList<>(this.maquinas);// copiamos el arreglo original de máquinas para no
+                                                                   // modificarlo
+        disponibles.sort((m1, m2) -> Integer.compare(m2.getPiezas(), m1.getPiezas()));// ordenamos las máquinas de mayor
+                                                                                      // a menor capacidad de production
                                                                                       // de piezas
         int suma = 0;
 

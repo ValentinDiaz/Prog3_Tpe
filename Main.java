@@ -33,21 +33,18 @@ public class Main {
          List<Maquina> greedy = fabrica.solucionGreedy();
 
          if (!greedy.isEmpty()) {
-             // Mostrar secuencia de máquinas
              System.out.print("Solución obtenida: ");
              for (Maquina m : greedy) {
                  System.out.print(m.getNombre() + "(" + m.getPiezas() + ")" + " ");
              }
              System.out.println();
 
-             // Calcular cantidad de piezas producidas y puestas en funcionamiento
              int totalPiezas = greedy.stream().mapToInt(Maquina::getPiezas).sum();
              int puestasEnFuncionamiento = greedy.size();
 
              System.out.println("Cantidad de piezas producidas: " + totalPiezas);
              System.out.println("Cantidad de puestas en funcionamiento: " + puestasEnFuncionamiento);
 
-             // Métrica de costo (estados generados)
              System.out.println("Candidatos considerados: " + fabrica.getEstadosGeneradosGreddy());
          } else {
              System.out.println("No se pudo generar la cantidad de piezas.");
